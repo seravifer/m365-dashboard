@@ -1,6 +1,6 @@
 import { CommandsService } from './../../service/commands';
 import { BLE } from '@ionic-native/ble/ngx';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,23 +8,22 @@ import { Router } from '@angular/router';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
-  devices: any[];
+  devices: any[] = [];
 
   constructor(
     private router: Router,
-    private commands: CommandsService,
     private bluetooth: BLE
   ) {}
 
   ngOnInit() {
     this.onScan();
-    console.log(this.commands.getInfo());
   }
 
   onScan() {
-    this.bluetooth.scan([], 60).subscribe(res => {
+    console.log('Scaning...');
+    this.bluetooth.scan([], 60).subscribe((res: any) => {
       this.devices.push(res);
       console.log(res);
     }, err => {

@@ -17,14 +17,15 @@ export class DashboardPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    let id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
+    console.log(id);
     this.bluetooth.connect(id).subscribe(res =>  {
       console.log('Conected device!');
       console.log(res);
       this.deviceInfo = res;
     }, err => {
       console.log('Device connection error!');
-    })
+    });
   }
 
 }
