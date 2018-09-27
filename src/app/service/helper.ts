@@ -13,6 +13,11 @@ export class HelperService {
     return array.buffer;
   }
 
+  hexToBytes(hex) {
+    let typedArray = new Uint8Array(hex.match(/[\da-f]{2}/gi).map((h) => parseInt(h, 16)));  
+    return typedArray.buffer
+  }
+
   bytesToString(buffer) {
     return String.fromCharCode.apply(null, new Uint8Array(buffer));
   }
