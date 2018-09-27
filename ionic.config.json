@@ -1,0 +1,7 @@
+{
+  "name": "m365-dashboard",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
