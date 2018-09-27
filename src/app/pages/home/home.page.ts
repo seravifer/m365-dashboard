@@ -1,8 +1,9 @@
 import { BLE } from '@ionic-native/ble/ngx';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
+  selector: 'home-page',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
@@ -11,24 +12,26 @@ export class HomePage {
   devices: any[];
 
   constructor(
+    private router: Router,
     private bluetooth: BLE
   ) {}
 
   ngOnInit() {
+    this.onScan();
+  }
+
+  onScan() {
     this.bluetooth.scan([], 60).subscribe(res => {
       this.devices.push(res);
       console.log(res);
     }, err => {
       console.warn('Bluetooth not found!');
-    })
+    });
   }
 
   onSelectDevice(id: string) {
-    this.bluetooth.connect(id).subscribe(res =>  {
-      console.log('Conected device!');
-    }, err => {
-      console.log('Device connection error!');
-    })
+    this.bluetooth.stopScan();
+    this.router.navigateByUrl(`/dashboard/${id}`);
   }
 
 }
