@@ -89,7 +89,7 @@ export class Request {
   construct() {
     let result = '';
     for (let i of this.msg) {
-      result += (i >= 0) && (i <= 15) ? "0" + i : i;
+      result += (i >= 0) && (i <= 15) ? "0" + i.toString(16) : i.toString(16);
     }
     return result;
   }

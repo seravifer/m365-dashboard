@@ -1,3 +1,4 @@
+import { CommandsService } from './../../service/commands';
 import { BLE } from '@ionic-native/ble/ngx';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
@@ -13,11 +14,13 @@ export class HomePage {
 
   constructor(
     private router: Router,
+    private commands: CommandsService,
     private bluetooth: BLE
   ) {}
 
   ngOnInit() {
     this.onScan();
+    console.log(this.commands.getInfo());
   }
 
   onScan() {
