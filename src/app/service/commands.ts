@@ -1,4 +1,4 @@
-import { Request, Commands } from './../models/request';
+import { Request, Command } from './../models/request';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -6,12 +6,16 @@ import { Injectable } from '@angular/core';
 })
 export class CommandsService {
 
+  serviceUUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
+  CHAR_WRITE = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'; // characteristic WRITE
+  CHAR_READ = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';  // characteristic READ
+
   constructor() { }
 
   getBattery() {
     return new Request()
-      .setDirection(Commands.MASTER_TO_BATTERY)
-      .setRW(Commands.READ)
+      .setDirection(Command.MASTER_TO_BATTERY)
+      .setRW(Command.READ)
       .setPosition(0x31)
       .setPayload(0x0a)
       .build();
@@ -19,10 +23,20 @@ export class CommandsService {
 
   getInfo() {
     return new Request()
-      .setDirection(Commands.MASTER_TO_M365)
-      .setRW(Commands.READ)
+      .setDirection(Command.MASTER_TO_M365)
+      .setRW(Command.READ)
       .setPosition(0xb0)
       .setPayload(0x20)
       .build();
   }
+
+  getSpeed() {
+    return new Request()
+      .setDirection(Command.MASTER_TO_M365)
+      .setRW(Command.READ)
+      .setPosition(0xB5)
+      .setPayload(0x02)
+      .build();
+  }
+
 }

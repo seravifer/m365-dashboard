@@ -1,4 +1,4 @@
-export enum Commands {
+export enum Command {
   MASTER_TO_M365 = 0x20,
   MASTER_TO_BATTERY = 0x22,
   READ = 0x01,
@@ -6,7 +6,7 @@ export enum Commands {
 }
 
 export class Request {
-  private msg: number[]
+  private msg: number[];
 
   private direction: number;
   private rw: number;
@@ -22,13 +22,13 @@ export class Request {
     this.checksum = 0;
   }
 
-  setDirection(drct: Commands) {
+  setDirection(drct: Command) {
     this.direction = drct;
     this.checksum += this.direction;
     return this;
   }
 
-  setRW(readOrWrite: Commands) {
+  setRW(readOrWrite: Command) {
     this.rw = readOrWrite;
     this.checksum += this.rw;
     return this;
@@ -43,7 +43,7 @@ export class Request {
   setPayloadList(bytesToSend: number[]) {
     this.payload = bytesToSend;
     this.checksum += this.payload.length + 2;
-    for (let i of this.payload) {
+    for (const i of this.payload) {
       this.checksum += i;
     }
     return this;
@@ -75,7 +75,7 @@ export class Request {
     this.msg.push(this.direction);
     this.msg.push(this.rw);
     this.msg.push(this.position);
-    for (let i of this.payload) {
+    for (const i of this.payload) {
       this.msg.push(i);
     }
   }
@@ -88,9 +88,10 @@ export class Request {
 
   construct() {
     let result = '';
-    for (let i of this.msg) {
-      result += (i >= 0) && (i <= 15) ? "0" + i.toString(16) : i.toString(16);
+    for (const i of this.msg) {
+      result += (i >= 0) && (i <= 15) ? '0' + i.toString(16) : i.toString(16);
     }
     return result;
   }
+
 }

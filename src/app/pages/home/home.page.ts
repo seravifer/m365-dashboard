@@ -1,6 +1,5 @@
-import { CommandsService } from './../../service/commands';
 import { BLE } from '@ionic-native/ble/ngx';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,13 +7,14 @@ import { Router } from '@angular/router';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
 
   devices: any[] = [];
 
   constructor(
     private router: Router,
-    private bluetooth: BLE
+    private bluetooth: BLE,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -23,9 +23,13 @@ export class HomePage implements OnInit {
 
   onScan() {
     console.log('Scaning...');
-    this.bluetooth.scan([], 60).subscribe((res: any) => {
-      this.devices.push(res);
+    this.devices = [];
+    this.bluetooth.scan([], 30).subscribe((res: any) => {
       console.log(res);
+      if (res.name) {
+        this.devices.push(res);
+        this.cdr.detectChanges();
+      }
     }, err => {
       console.warn('Bluetooth not found!');
     });
@@ -34,6 +38,10 @@ export class HomePage implements OnInit {
   onSelectDevice(id: string) {
     this.bluetooth.stopScan();
     this.router.navigateByUrl(`/dashboard/${id}`);
+  }
+
+  ngOnDestroy() {
+    this.bluetooth.stopScan();
   }
 
 }

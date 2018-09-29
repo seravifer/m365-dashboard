@@ -14,7 +14,6 @@
   <ion-list *ngFor="let device of devices">
     <ion-item (click)="onSelectDevice(device.id)">
       {{ device.name }}
-      <ion-note item-end>{{ device.rssi }}</ion-note>
     </ion-item>
   </ion-list>
 
