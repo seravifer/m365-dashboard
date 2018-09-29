@@ -3,10 +3,74 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>dashboard</ion-title>
+    <ion-title>Dashboard</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  {{ deviceStats?.speed }}
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label>Velocidad</ion-label>
+      <ion-note slot="end">{{ scooterData?.speed }}Km/h</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Velocidad media</ion-label>
+      <ion-note slot="end">{{ scooterData?.avg_speed }}Km/h</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Velocidad máxima</ion-label>
+      <ion-note slot="end">{{ scooterData?.avg_speed }}Km/h</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Batería</ion-label>
+      <ion-note slot="end">{{ scooterData?.battery_life }}%</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Batería Temp</ion-label>
+      <ion-note slot="end">{{ scooterData?.battery_temp1 }}ºC / {{ scooterData?.battery_temp2 }}ºC</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Batería Restante</ion-label>
+      <ion-note slot="end">{{ scooterData?.remaining_capacity }}mAh</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Intensidad</ion-label>
+      <ion-note slot="end">{{ scooterData?.current_ampere }}A</ion-note>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Tensión</ion-label>
+        <ion-note slot="end">{{ scooterData?.current_voltage }}V</ion-note>
+      </ion-item>
+
+    <ion-item>
+        <ion-label>Potencia</ion-label>
+        <ion-note slot="end">{{ scooterData?.current_voltage * scooterData?.current_ampere}}W</ion-note>
+      </ion-item>
+
+    <ion-item>
+      <ion-label>Distancia</ion-label>
+      <ion-note slot="end">{{ scooterData?.distance_travelled }}Km</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Distancia total</ion-label>
+      <ion-note slot="end">{{ scooterData?.total_distance }}Km</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Temperatura motor</ion-label>
+      <ion-note slot="end">{{ scooterData?.motor_temperature }}ºC</ion-note>
+    </ion-item>
+
+  </ion-list>
+
 </ion-content>

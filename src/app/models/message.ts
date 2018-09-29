@@ -5,7 +5,7 @@ export enum Command {
   WRITE = 0x03
 }
 
-export class Request {
+export class Message {
 
   /*
    * +---+---+---+---+---+---+---+---+---+
