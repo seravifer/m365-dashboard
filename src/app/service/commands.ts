@@ -23,7 +23,7 @@ export class CommandsService {
 
   getInfo() {
     return new Request()
-      .setDirection(Command.MASTER_TO_M365)
+      .setDirection(Command.MASTER_TO_SCOOTER)
       .setRW(Command.READ)
       .setPosition(0xb0)
       .setPayload(0x20)
@@ -32,9 +32,9 @@ export class CommandsService {
 
   getSpeed() {
     return new Request()
-      .setDirection(Command.MASTER_TO_M365)
+      .setDirection(Command.MASTER_TO_SCOOTER)
       .setRW(Command.READ)
-      .setPosition(0xB5)
+      .setPosition(0xb5)
       .setPayload(0x02)
       .build();
   }

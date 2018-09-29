@@ -4,6 +4,7 @@ import { BLE } from '@ionic-native/ble/ngx';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Scooter } from '../../models/scooter';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'dashboard-page',
@@ -14,6 +15,7 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   deviceInfo: any;
   deviceStats: Scooter = {};
+  intervals: any[] = [];
 
   constructor(
     private bluetooth: BLE,
@@ -33,17 +35,18 @@ export class DashboardPage implements OnInit, OnDestroy {
       console.log('Conected device!');
       this.deviceInfo = res;
 
-      this.bluetooth.startNotification(this.deviceInfo.id, this.commands.serviceUUID, this.commands.CHAR_READ).subscribe(data => {
-        const result = this.helper.bytesToHex(data).slice(12, 16);
-
-        const result1 = this.helper.reverseHex(result);
-        const speed = parseInt(result1, 16) / 1000;
-
+      this.bluetooth.startNotification(this.deviceInfo.id, this.commands.serviceUUID, this.commands.CHAR_READ)
+      .pipe(map(e => this.helper.bytesToHex(e)))
+      .subscribe(data => {
+        const result = this.helper.reverseHex(data.slice(12, 16));
+        const speed = this.helper.hexToInt(result) / 1000;
         this.deviceStats.speed = Math.round(speed * 10) / 10;
+
+        console.log(result, speed);
         this.cdr.detectChanges();
       });
 
-      setInterval(() => this.requestSpeed(), 500);
+      this.intervals.push(setInterval(() => this.requestSpeed(), 500));
     }, err => {
       console.log('Device connection error!');
     });
@@ -60,6 +63,7 @@ export class DashboardPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.bluetooth.disconnect(this.deviceInfo.id);
+    clearInterval(this.intervals[0]);
   }
 
 }

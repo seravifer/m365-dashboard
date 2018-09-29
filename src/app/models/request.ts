@@ -1,11 +1,23 @@
 export enum Command {
-  MASTER_TO_M365 = 0x20,
+  MASTER_TO_SCOOTER = 0x20,
   MASTER_TO_BATTERY = 0x22,
   READ = 0x01,
   WRITE = 0x03
 }
 
 export class Request {
+
+  /*
+   * +---+---+---+---+---+---+---+---+---+
+   * |x55|xAA| L | D | T | c |...|ck0|ck1|
+   * +---+---+---+---+---+---+---+---+---+
+   * L -> data size + 2
+   * D -> device comunication
+   * T -> type (read/write)
+   * c -> data
+   * ck0 / ck1 -> checksum
+   */
+
   private msg: number[];
 
   private direction: number;
@@ -92,6 +104,10 @@ export class Request {
       result += (i >= 0) && (i <= 15) ? '0' + i.toString(16) : i.toString(16);
     }
     return result;
+  }
+
+  toBytes() {
+
   }
 
 }
