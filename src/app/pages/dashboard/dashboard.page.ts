@@ -6,6 +6,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Scooter } from '../../models/scooter';
 import { map } from 'rxjs/operators';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'dashboard-page',
@@ -25,7 +26,8 @@ export class DashboardPage implements OnInit {
     private helper: HelperService,
     private commands: CommandsService,
     private cdr: ChangeDetectorRef,
-    private response: ResponseService
+    private response: ResponseService,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -40,7 +42,7 @@ export class DashboardPage implements OnInit {
       this.scooterData = this.response.scooterData;
 
       this.bluetooth.startNotification(this.deviceInfo.id, this.commands.serviceUUID, this.commands.CHAR_READ)
-      .pipe(map(e => this.helper.bytesToHex(e)))
+      .pipe(map(e => this.helper.byteToHex(e)))
       .subscribe(data => {
         console.log(data);
         this.response.hendleResponse(data);
@@ -48,28 +50,26 @@ export class DashboardPage implements OnInit {
       });
 
       // this.intervals.push(setInterval(() => this.sendRequest(this.commands.getMasterInfo()), 500));
-      // this.sendRequest(this.commands.getBattery());
-      // this.sendRequest(this.commands.getAmp());
-      // this.sendRequest(this.commands.getDistance());
-      // this.sendRequest(this.commands.getVoltage());
-      // this.sendRequest(this.commands.getMasterInfo());
-      // this.sendRequest(this.commands.getMasterBattery());
+      // this.sendRequest(this.commands.getBatteryInfo());
     }, err => {
       console.log('Device connection error!');
+      this.navCtrl.goBack();
     });
   }
 
   sendRequest(data: any) {
-    const value = this.helper.hexStringToByte(data);
+    const value = this.helper.hexToByte(data);
     this.bluetooth.write(this.deviceInfo.id, this.commands.serviceUUID, this.commands.CHAR_WRITE, value).then(res => {
       // console.log(data);
     }).catch(err => {
-      console.log(err);
+      console.warn(err);
     });
   }
 
   ionViewDidLeave() {
-    this.bluetooth.disconnect(this.deviceInfo.id).then(() => console.log('Disconnected!'));
+    if (this.deviceInfo.id && this.bluetooth.isConnected(this.deviceInfo.id)) {
+      this.bluetooth.disconnect(this.deviceInfo.id).then(() => console.log('Device disconnected!'));
+    }
     clearInterval(this.intervals[0]);
   }
 

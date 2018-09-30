@@ -22,7 +22,7 @@ export class ResponseService {
     let dataType = data.slice(10, 12);
     let lengthContent = (d(data.slice(4, 6)) - 2) * 2;
     let dataContent = data.slice(12, 12 + lengthContent);
-    dataContent = this.helper.reverseHex(dataContent);
+    dataContent = this.helper.parseHex(dataContent);
     console.log(dataType, lengthContent, dataContent);
 
     if (lengthContent > 10 * 2 && !this._lastResponse) {
@@ -33,7 +33,7 @@ export class ResponseService {
       dataType = data.slice(10, 12);
       lengthContent = (d(data.slice(4, 6)) - 2) * 2;
       dataContent = data.slice(12, 12 + lengthContent);
-      dataContent = this.helper.reverseHex(dataContent);
+      dataContent = this.helper.parseHex(dataContent);
       this._lastResponse = null;
     }
 
