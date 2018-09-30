@@ -37,7 +37,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   onSelectDevice(id: string) {
     this.bluetooth.stopScan();
-    this.router.navigateByUrl(`/dashboard/${id}`);
+    this.router.navigate(['dashboard', id]);
   }
 
   ngOnDestroy() {

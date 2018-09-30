@@ -1,6 +1,8 @@
 export enum Command {
   MASTER_TO_SCOOTER = 0x20,
   MASTER_TO_BATTERY = 0x22,
+  BATTERY_TO_MASTER = 0x25,
+  SCOOTER_TO_MASTER = 0x23,
   READ = 0x01,
   WRITE = 0x03
 }

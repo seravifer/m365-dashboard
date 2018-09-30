@@ -1,7 +1,7 @@
 export interface Scooter {
-    serial_number?: number;
-    firmware_version?: number;
-    bms_code?: number;
+    serial_number?: string;
+    firmware_version?: string;
+    bms_code?: string;
 
     error_code?: number;
     warning_oce?: number;
@@ -23,18 +23,17 @@ export interface Scooter {
     light_mode?: boolean;
     lock_mode?: boolean;
 
-    recovered_amp?: number;
-    spent_amp?: number;
-
     battery_life?: number;
-    bettery_serial?: string;
+    battery_serial?: string;
+    battery_date?: string;
     battery_design_capacity?: number;
     battery_remaining_capacity?: number;
     battery_health?: number;
     battery_temp1?: number;
     battery_temp2?: number;
-    current_ampere?: number;
-    current_voltage?: number;
+    battery_ampere?: number;
+    battery_voltage?: number;
+    battery_power?: number;
     battery_charges?: number;
     battery_avg_charge?: number;
     voltage_cells?: number[];

@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class CommandsService {
 
-  // Start -> 10, 1a, 67, 17
+  // Start -> 10, 1a, 67, (17)
   // Runing -> 3a,25,b0
   // Info -> 7c, 7d, 7b, 76
 
@@ -21,7 +21,7 @@ export class CommandsService {
       .setDirection(Command.MASTER_TO_SCOOTER)
       .setRW(Command.READ)
       .setPosition(0x10)
-      .setPayload(0x02)
+      .setPayload(0x0e)
       .build();
   }
 
@@ -34,30 +34,12 @@ export class CommandsService {
       .build();
   }
 
-  getBMS() {
-    return new Message()
-      .setDirection(Command.MASTER_TO_SCOOTER)
-      .setRW(Command.READ)
-      .setPosition(0x67)
-      .setPayload(0x04)
-      .build();
-  }
-
   getMasterInfo() {
     return new Message()
       .setDirection(Command.MASTER_TO_SCOOTER)
       .setRW(Command.READ)
       .setPosition(0xb0)
       .setPayload(0x20)
-      .build();
-  }
-
-  getDistance() {
-    return new Message()
-      .setDirection(Command.MASTER_TO_SCOOTER)
-      .setRW(Command.READ)
-      .setPosition(0xB9)
-      .setPayload(0x02)
       .build();
   }
 
@@ -83,14 +65,32 @@ export class CommandsService {
 
   getMasterBattery() {
     return new Message()
-      .setDirection(Command.MASTER_TO_SCOOTER)
+      .setDirection(Command.MASTER_TO_BATTERY)
       .setRW(Command.READ)
       .setPosition(0x31)
+      .setPayload(0x0a)
+      .build();
+  }
+
+  getBatteryDate() {
+    return new Message()
+      .setDirection(Command.MASTER_TO_BATTERY)
+      .setRW(Command.READ)
+      .setPosition(0x20)
       .setPayload(0x02)
       .build();
   }
 
-  getBatteryInfo() { // + Design capacity
+  getBatteryHealth() {
+    return new Message()
+      .setDirection(Command.MASTER_TO_BATTERY)
+      .setRW(Command.READ)
+      .setPosition(0x3b)
+      .setPayload(0x02)
+      .build();
+  }
+
+  getBatteryInfo() {
     return new Message()
       .setDirection(Command.MASTER_TO_BATTERY)
       .setRW(Command.READ)

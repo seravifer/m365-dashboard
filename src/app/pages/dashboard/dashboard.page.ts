@@ -44,13 +44,29 @@ export class DashboardPage implements OnInit {
       this.bluetooth.startNotification(this.deviceInfo.id, this.commands.serviceUUID, this.commands.CHAR_READ)
       .pipe(map(e => this.helper.byteToHex(e)))
       .subscribe(data => {
-        console.log(data);
         this.response.hendleResponse(data);
         this.cdr.detectChanges();
       });
 
       // this.intervals.push(setInterval(() => this.sendRequest(this.commands.getMasterInfo()), 500));
-      // this.sendRequest(this.commands.getBatteryInfo());
+
+      /*this.sendRequest(this.commands.getSerial());
+      this.sendRequest(this.commands.getFirmware());
+      this.sendRequest(this.commands.getTravel());
+      this.sendRequest(this.commands.getRemainingDistance());
+      this.sendRequest(this.commands.getMasterInfo());*/
+
+      this.sendRequest(this.commands.getMasterBattery());
+      this.sendRequest(this.commands.getBatteryInfo());
+      this.sendRequest(this.commands.getCycleCharge());
+      this.sendRequest(this.commands.getVoltageByCell());
+      this.sendRequest(this.commands.getBatteryHealth());
+      this.sendRequest(this.commands.getBatteryDate());
+
+      this.sendRequest(this.commands.getCurise());
+      this.sendRequest(this.commands.getLight());
+      this.sendRequest(this.commands.getLock());
+      this.sendRequest(this.commands.getRecovery());
     }, err => {
       console.log('Device connection error!');
       this.navCtrl.goBack();
@@ -67,7 +83,7 @@ export class DashboardPage implements OnInit {
   }
 
   ionViewDidLeave() {
-    if (this.deviceInfo.id && this.bluetooth.isConnected(this.deviceInfo.id)) {
+    if (this.deviceInfo && this.bluetooth.isConnected(this.deviceInfo.id)) {
       this.bluetooth.disconnect(this.deviceInfo.id).then(() => console.log('Device disconnected!'));
     }
     clearInterval(this.intervals[0]);

@@ -29,6 +29,14 @@ export class HelperService {
     return temp.reverse().join('');
   }
 
+  hexToAscii(hex) {
+    let str = '';
+    for (let i = 0; (i < hex.length && hex.substr(i, 2) !== '00'); i += 2) {
+      str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    }
+    return str.split('').reverse().join('');
+  }
+
 }
 
 // Hex to Dec
