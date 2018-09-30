@@ -35,6 +35,6 @@ export interface Scooter {
     battery_voltage?: number;
     battery_power?: number;
     battery_charges?: number;
-    battery_avg_charge?: number;
+    battery_full_charges?: number;
     voltage_cells?: number[];
 }

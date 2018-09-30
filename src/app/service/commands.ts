@@ -6,10 +6,6 @@ import { Injectable } from '@angular/core';
 })
 export class CommandsService {
 
-  // Start -> 10, 1a, 67, (17)
-  // Runing -> 3a,25,b0
-  // Info -> 7c, 7d, 7b, 76
-
   serviceUUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
   CHAR_WRITE = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'; // characteristic WRITE
   CHAR_READ = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';  // characteristic READ

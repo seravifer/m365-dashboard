@@ -48,28 +48,30 @@ export class DashboardPage implements OnInit {
         this.cdr.detectChanges();
       });
 
-      // this.intervals.push(setInterval(() => this.sendRequest(this.commands.getMasterInfo()), 500));
-
       /*this.sendRequest(this.commands.getSerial());
       this.sendRequest(this.commands.getFirmware());
+
+      this.sendRequest(this.commands.getCurise());
+      this.sendRequest(this.commands.getLight());
+      this.sendRequest(this.commands.getLock());
+      this.sendRequest(this.commands.getRecovery());
+
       this.sendRequest(this.commands.getTravel());
       this.sendRequest(this.commands.getRemainingDistance());
-      this.sendRequest(this.commands.getMasterInfo());*/
+      this.sendRequest(this.commands.getMasterInfo());
 
       this.sendRequest(this.commands.getMasterBattery());
       this.sendRequest(this.commands.getBatteryInfo());
       this.sendRequest(this.commands.getCycleCharge());
       this.sendRequest(this.commands.getVoltageByCell());
       this.sendRequest(this.commands.getBatteryHealth());
-      this.sendRequest(this.commands.getBatteryDate());
+      this.sendRequest(this.commands.getBatteryDate());*/
 
-      this.sendRequest(this.commands.getCurise());
-      this.sendRequest(this.commands.getLight());
-      this.sendRequest(this.commands.getLock());
-      this.sendRequest(this.commands.getRecovery());
+      // this.intervals.push(setInterval(() => ###, 500));
     }, err => {
       console.log('Device connection error!');
-      this.navCtrl.goBack();
+      if (this.deviceInfo) this.bluetooth.autoConnect(this.deviceInfo.id, null, null);
+      else this.navCtrl.goBack();
     });
   }
 

@@ -9,17 +9,6 @@ export enum Command {
 
 export class Message {
 
-  /*
-   * +---+---+---+---+---+---+---+---+---+
-   * |x55|xAA| L | D | T | c |...|ck0|ck1|
-   * +---+---+---+---+---+---+---+---+---+
-   * L -> data size + 2
-   * D -> device comunication
-   * T -> type (read/write)
-   * c -> data
-   * ck0 / ck1 -> checksum
-   */
-
   private msg: number[];
 
   private direction: number;

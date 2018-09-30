@@ -80,7 +80,7 @@
 
     <ion-item>
       <ion-label>Salud</ion-label>
-      <ion-note slot="end">{{ scooterData?.battery_health }}</ion-note>
+      <ion-note slot="end">{{ scooterData?.battery_health }}%</ion-note>
     </ion-item>
 
     <ion-item>
@@ -114,26 +114,30 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Media por carga</ion-label>
-      <ion-note slot="end">{{ scooterData?.battery_avg_charge }}</ion-note>
+      <ion-label>Ciclos de carga completas</ion-label>
+      <ion-note slot="end">{{ scooterData?.battery_full_charges }}</ion-note>
     </ion-item>
 
     <ion-list-header>Opciones</ion-list-header>
     <ion-item>
       <ion-label>Crucero</ion-label>
-      <ion-toggle *ngIf="scooterData" [(ngModel)]="scooterData.cruise_mode"></ion-toggle>
+      <ion-toggle *ngIf="scooterData" [(ngModel)]="scooterData.cruise_mode" ionChange="request.setCruise(!scooterData.cruise_mode)"></ion-toggle>
     </ion-item>
     <ion-item>
       <ion-label>Luz trasera</ion-label>
-      <ion-toggle *ngIf="scooterData" [(ngModel)]="scooterData.light_mode"></ion-toggle>
+      <ion-toggle *ngIf="scooterData" [(ngModel)]="scooterData.light_mode" ionChange="request.setLight(!scooterData.light_mode)"></ion-toggle>
     </ion-item>
     <ion-item>
       <ion-label>Bloqueo</ion-label>
-      <ion-toggle *ngIf="scooterData" [(ngModel)]="scooterData.lock_mode"></ion-toggle>
+      <ion-toggle *ngIf="scooterData" [(ngModel)]="scooterData.lock_mode" ionChange="request.setLock(!scooterData.lock_mode)"></ion-toggle>
     </ion-item>
     <ion-item>
       <ion-label>KERS</ion-label>
-      <ion-note slot="end">{{ scooterData?.recovery_mode }}</ion-note>
+      <ion-select *ngIf="scooterData" [(ngModel)]="scooterData.recovery_mode" interface="action-sheet" ionChange="request.setLock(scooterData.recovery_mode)">
+        <ion-select-option value="0">Bajo</ion-select-option>
+        <ion-select-option value="1">Medio</ion-select-option>
+        <ion-select-option value="2">Alto</ion-select-option>
+      </ion-select>
     </ion-item>
 
   </ion-list>

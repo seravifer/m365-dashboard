@@ -150,12 +150,12 @@ export class ResponseService {
   parseCycleCharge(data: string) {
     const value = data.match(/.{1,4}/g);
     this._scooterData.battery_charges = d(value[1]);
-    this._scooterData.battery_avg_charge = d(value[0]);
+    this._scooterData.battery_full_charges = d(value[0]);
   }
 
   parseVoltageByCell(data: string) {
     const value = data.match(/.{1,4}/g);
-    this._scooterData.voltage_cells = value.map(e => d(e) / 1000).reverse();
+    this._scooterData.voltage_cells = value.filter(e => e !== '0000').map(e => d(e) / 1000).reverse();
   }
 
   // Settings - - - - - - - - - - - - - - - - -
