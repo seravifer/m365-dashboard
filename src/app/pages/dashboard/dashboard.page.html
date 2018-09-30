@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
   <ion-list>
 
@@ -27,36 +27,6 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Batería</ion-label>
-      <ion-note slot="end">{{ scooterData?.battery_life }}%</ion-note>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Batería Temp</ion-label>
-      <ion-note slot="end">{{ scooterData?.battery_temp1 }}ºC / {{ scooterData?.battery_temp2 }}ºC</ion-note>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Batería Restante</ion-label>
-      <ion-note slot="end">{{ scooterData?.remaining_capacity }}mAh</ion-note>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Intensidad</ion-label>
-      <ion-note slot="end">{{ scooterData?.current_ampere }}A</ion-note>
-    </ion-item>
-
-    <ion-item>
-        <ion-label>Tensión</ion-label>
-        <ion-note slot="end">{{ scooterData?.current_voltage }}V</ion-note>
-      </ion-item>
-
-    <ion-item>
-        <ion-label>Potencia</ion-label>
-        <ion-note slot="end">{{ scooterData?.current_voltage * scooterData?.current_ampere}}W</ion-note>
-      </ion-item>
-
-    <ion-item>
       <ion-label>Distancia</ion-label>
       <ion-note slot="end">{{ scooterData?.distance_travelled }}Km</ion-note>
     </ion-item>
@@ -69,6 +39,51 @@
     <ion-item>
       <ion-label>Temperatura motor</ion-label>
       <ion-note slot="end">{{ scooterData?.motor_temperature }}ºC</ion-note>
+    </ion-item>
+
+    <ion-list-header>Batería</ion-list-header>
+    <ion-item>
+      <ion-label>Carga</ion-label>
+      <ion-note slot="end">{{ scooterData?.battery_life }}%</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Temperatura</ion-label>
+      <ion-note slot="end">{{ scooterData?.battery_temp1 }}ºC / {{ scooterData?.battery_temp2 }}ºC</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Batería Restante</ion-label>
+      <ion-note slot="end">{{ scooterData?.battery_remaining_capacity }}mAh</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Intensidad</ion-label>
+      <ion-note slot="end">{{ scooterData?.current_ampere }}A</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Tensión</ion-label>
+      <ion-note slot="end">{{ scooterData?.current_voltage }}V</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Potencia</ion-label>
+      <ion-note slot="end">{{ scooterData?.current_voltage * scooterData?.current_ampere}}W</ion-note>
+    </ion-item>
+
+    <ion-list-header>Opciones</ion-list-header>
+    <ion-item>
+      <ion-label>Crucero</ion-label>
+      <ion-toggle [(ngModel)]="scooterData.cruise_mode"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Luz trasera</ion-label>
+      <ion-toggle [(ngModel)]="scooterData.light_mode"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>KERS</ion-label>
+      <ion-note slot="end">{{ scooterData?.recovery_mode }}V</ion-note>
     </ion-item>
 
   </ion-list>

@@ -32,3 +32,8 @@ export class HelperService {
   }
 
 }
+
+// Hex to Dec
+export function d(hex: string) {
+  return parseInt(hex, 16);
+}

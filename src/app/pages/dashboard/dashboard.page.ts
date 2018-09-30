@@ -2,10 +2,10 @@ import { ResponseService } from './../../service/response';
 import { CommandsService } from './../../service/commands';
 import { HelperService } from './../../service/helper';
 import { BLE } from '@ionic-native/ble/ngx';
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Scooter } from '../../models/scooter';
-import { map, pairwise } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'dashboard-page',
@@ -47,19 +47,19 @@ export class DashboardPage implements OnInit {
         this.cdr.detectChanges();
       });
 
-      /*this.intervals.push(setInterval(() => this.request(this.commands.getSpeed()), 500));
-      this.request(this.commands.getBattery());
-      this.request(this.commands.getAmp());
-      this.request(this.commands.getDistance());*/
-      // this.request(this.commands.getVoltage());
-      // this.request(this.commands.getMasterInfo());
-      this.request(this.commands.getMasterBattery());
+      // this.intervals.push(setInterval(() => this.sendRequest(this.commands.getMasterInfo()), 500));
+      // this.sendRequest(this.commands.getBattery());
+      // this.sendRequest(this.commands.getAmp());
+      // this.sendRequest(this.commands.getDistance());
+      // this.sendRequest(this.commands.getVoltage());
+      // this.sendRequest(this.commands.getMasterInfo());
+      // this.sendRequest(this.commands.getMasterBattery());
     }, err => {
       console.log('Device connection error!');
     });
   }
 
-  request(data: any) {
+  sendRequest(data: any) {
     const value = this.helper.hexStringToByte(data);
     this.bluetooth.write(this.deviceInfo.id, this.commands.serviceUUID, this.commands.CHAR_WRITE, value).then(res => {
       // console.log(data);

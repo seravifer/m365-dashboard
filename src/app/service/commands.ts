@@ -1,4 +1,3 @@
-import { HelperService } from './helper';
 import { Message, Command } from '../models/message';
 import { Injectable } from '@angular/core';
 
@@ -7,78 +6,15 @@ import { Injectable } from '@angular/core';
 })
 export class CommandsService {
 
+  // Start -> 10, 1a, 67, 17
+  // Runing -> 3a,25,b0
+  // Info -> 7c, 7d, 7b, 76
+
   serviceUUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
   CHAR_WRITE = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'; // characteristic WRITE
   CHAR_READ = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';  // characteristic READ
 
   constructor() { }
-
-  // Specific Info - - - - - - - - - - - - - - - - -
-
-  getSpeed() {
-    return new Message()
-      .setDirection(Command.MASTER_TO_SCOOTER)
-      .setRW(Command.READ)
-      .setPosition(0xb5)
-      .setPayload(0x02)
-      .build();
-  }
-
-  getBattery() {
-    return new Message()
-      .setDirection(Command.MASTER_TO_BATTERY)
-      .setRW(Command.READ)
-      .setPosition(0x32)
-      .setPayload(0x02)
-      .build();
-  }
-
-  getAmp() {
-    return new Message()
-      .setDirection(Command.MASTER_TO_BATTERY)
-      .setRW(Command.READ)
-      .setPosition(0x33)
-      .setPayload(0x02)
-      .build();
-  }
-
-  getDistance() {
-    return new Message()
-      .setDirection(Command.MASTER_TO_SCOOTER)
-      .setRW(Command.READ)
-      .setPosition(0xB9)
-      .setPayload(0x02)
-      .build();
-  }
-
-  getVoltage() {
-    return new Message()
-      .setDirection(Command.MASTER_TO_BATTERY)
-      .setRW(Command.READ)
-      .setPosition(0x34)
-      .setPayload(0x02)
-      .build();
-  }
-
-  // General Info - - - - - - - - - - - - - - - - -
-
-  getMasterInfo() {
-    return new Message()
-      .setDirection(Command.MASTER_TO_SCOOTER)
-      .setRW(Command.READ)
-      .setPosition(0xb0)
-      .setPayload(0x20)
-      .build();
-  }
-
-  getMasterBattery() {
-    return new Message()
-      .setDirection(Command.MASTER_TO_SCOOTER)
-      .setRW(Command.READ)
-      .setPosition(0x7C)
-      .setPayload(0x02)
-      .build();
-  }
 
   getSerial() {
     return new Message()
@@ -98,16 +34,6 @@ export class CommandsService {
       .build();
   }
 
-  getVoltageByCell() {
-    return new Message()
-      .setDirection(Command.MASTER_TO_SCOOTER)
-      .setRW(Command.READ)
-      .setPosition(0x40)
-      .setPayload(0x1e)
-      .build();
-  }
-
-  // ¿?
   getBMS() {
     return new Message()
       .setDirection(Command.MASTER_TO_SCOOTER)
@@ -117,12 +43,21 @@ export class CommandsService {
       .build();
   }
 
-  getTravelInfo() {
+  getMasterInfo() {
     return new Message()
       .setDirection(Command.MASTER_TO_SCOOTER)
       .setRW(Command.READ)
-      .setPosition(0x3a)
-      .setPayload(0x04)
+      .setPosition(0xb0)
+      .setPayload(0x20)
+      .build();
+  }
+
+  getDistance() {
+    return new Message()
+      .setDirection(Command.MASTER_TO_SCOOTER)
+      .setRW(Command.READ)
+      .setPosition(0xB9)
+      .setPayload(0x02)
       .build();
   }
 
@@ -134,7 +69,53 @@ export class CommandsService {
       .setPayload(0x04)
       .build();
   }
-  // ¿?
+
+  getTravel() {
+    return new Message()
+      .setDirection(Command.MASTER_TO_SCOOTER)
+      .setRW(Command.READ)
+      .setPosition(0x3a)
+      .setPayload(0x04)
+      .build();
+  }
+
+  // Battery - - - - - - - - - - - - - - - - -
+
+  getMasterBattery() {
+    return new Message()
+      .setDirection(Command.MASTER_TO_SCOOTER)
+      .setRW(Command.READ)
+      .setPosition(0x31)
+      .setPayload(0x02)
+      .build();
+  }
+
+  getBatteryInfo() { // + Design capacity
+    return new Message()
+      .setDirection(Command.MASTER_TO_BATTERY)
+      .setRW(Command.READ)
+      .setPosition(0x10)
+      .setPayload(0x12)
+      .build();
+  }
+
+  getCycleCharge() {
+    return new Message()
+      .setDirection(Command.MASTER_TO_BATTERY)
+      .setRW(Command.READ)
+      .setPosition(0x1b)
+      .setPayload(0x04)
+      .build();
+  }
+
+  getVoltageByCell() {
+    return new Message()
+      .setDirection(Command.MASTER_TO_BATTERY)
+      .setRW(Command.READ)
+      .setPosition(0x40)
+      .setPayload(0x1e)
+      .build();
+  }
 
   // Settings - - - - - - - - - - - - - - - - -
 
