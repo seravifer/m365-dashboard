@@ -34,6 +34,8 @@ export interface Scooter {
     battery_ampere?: number;
     battery_voltage?: number;
     battery_power?: number;
+    battery_max_power?: number;
+    battery_min_power?: number;
     battery_charges?: number;
     battery_full_charges?: number;
     voltage_cells?: number[];

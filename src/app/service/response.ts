@@ -125,8 +125,10 @@ export class ResponseService {
   }
 
   private parsePower() {
-    const value = this._scooterData.battery_voltage * this._scooterData.battery_ampere;
-    this._scooterData.battery_power = Math.round(value * 10) / 10;
+    const value = Math.round(this._scooterData.battery_voltage * this._scooterData.battery_ampere * 10) / 10;
+    this._scooterData.battery_power = value;
+    if (value > this._scooterData.battery_max_power) this._scooterData.battery_max_power = value;
+    if (value < this._scooterData.battery_min_power) this._scooterData.battery_min_power = value;
   }
 
   parseBatteryDate(data: string) {

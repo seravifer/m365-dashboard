@@ -107,6 +107,16 @@
       <ion-label>Potencia</ion-label>
       <ion-note slot="end">{{ scooterData?.battery_power }}W</ion-note>
     </ion-item>
+    
+    <ion-item>
+      <ion-label>Potencia Máxima</ion-label>
+      <ion-note slot="end">{{ scooterData?.battery_power }}W</ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Potencia Minima</ion-label>
+      <ion-note slot="end">{{ scooterData?.battery_power }}W</ion-note>
+    </ion-item>
 
     <ion-item>
       <ion-label>Ciclos de carga</ion-label>
@@ -116,6 +126,11 @@
     <ion-item>
       <ion-label>Ciclos de carga completas</ion-label>
       <ion-note slot="end">{{ scooterData?.battery_full_charges }}</ion-note>
+    </ion-item>
+
+    <ion-list-header *ngIf="scooterData && scooterData.voltage_cells">Voltajes de celdas</ion-list-header>
+    <ion-item *ngFor="let cell of scooterData.voltage_cells">
+      <ion-label>{{ cell }}V</ion-label>
     </ion-item>
 
     <ion-list-header>Opciones</ion-list-header>
