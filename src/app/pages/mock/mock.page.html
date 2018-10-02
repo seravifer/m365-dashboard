@@ -9,7 +9,18 @@
 
 <ion-content scrollY="false">
   <ion-slides pager="true" #slides [options]="slideOptions">
-    <ion-slide></ion-slide>
+    <ion-slide>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            150W<span>Potencia</span>
+          </div>
+          <div class="col">
+            150W<span>Potencia máxima</span>
+          </div>
+        </div>
+      </div>
+    </ion-slide>
     <ion-slide>
       <div class="container">
         <div class="speed">23<span>7</span></div>
@@ -22,6 +33,17 @@
         <div class="travel">
           <div>12,6<span>Km</span></div>
           <div>05:35</div>
+        </div>
+        <div class="actions">
+          <ion-fab-button>
+            <ion-icon name="flash"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button>
+            <ion-icon name="unlock"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button>
+            <ion-icon name="flashlight"></ion-icon>
+          </ion-fab-button>
         </div>
       </div>
     </ion-slide>
