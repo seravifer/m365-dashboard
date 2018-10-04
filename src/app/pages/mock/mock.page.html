@@ -23,16 +23,16 @@
     </ion-slide>
     <ion-slide>
       <div class="container">
-        <div class="speed">23<span>7</span></div>
+        <div class="speed">{{ truncate(scooterData?.speed) }}<span>{{ getDecimal(scooterData?.speed) }}</span></div>
 
         <div class="options">
-          <div>56%</div>
-          <div>120W</div>
+          <div>{{ scooterData?.battery_life }}%</div>
+          <div>{{ scooterData?.battery_power }}W</div>
         </div>
         <div class="line"></div>
         <div class="travel">
-          <div>12,6<span>Km</span></div>
-          <div>05:35</div>
+          <div>{{ scooterData?.distance_travelled }}<span>Km</span></div>
+          <div>{{ scooterData?.uptime }}</div>
         </div>
         <div class="actions">
           <ion-fab-button>
@@ -50,63 +50,151 @@
     <ion-slide>
       <div class="container margin">
         <ion-list lines="inset" inset="true">
+          <ion-list-header>Info</ion-list-header>
           <ion-item>
-            <ion-label>Pokémon Yellow</ion-label>
+            <ion-label>Serial</ion-label>
+            <ion-note slot="end">{{ scooterData?.serial_number }}</ion-note>
           </ion-item>
           <ion-item>
-            <ion-label>Mega Man X</ion-label>
+            <ion-label>Firmware</ion-label>
+            <ion-note slot="end">{{ scooterData?.firmware_version }}</ion-note>
           </ion-item>
           <ion-item>
-            <ion-label>The Legend of Zelda</ion-label>
+            <ion-label>BMS</ion-label>
+            <ion-note slot="end">{{ scooterData?.bms_code }}</ion-note>
+          </ion-item>
+
+          <ion-list-header>Velocidades</ion-list-header>
+          <ion-item>
+            <ion-label>Velocidad</ion-label>
+            <ion-note slot="end">{{ scooterData?.speed }}Km/h</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Velocidad media</ion-label>
+            <ion-note slot="end">{{ scooterData?.avg_speed }}Km/h</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Velocidad máxima</ion-label>
+            <ion-note slot="end">{{ scooterData?.max_speed }}Km/h</ion-note>
+          </ion-item>
+
+          <ion-list-header>Distancia</ion-list-header>
+          <ion-item>
+            <ion-label>Distancia del viaje</ion-label>
+            <ion-note slot="end">{{ scooterData?.distance_travelled }}Km</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Distancia total</ion-label>
+            <ion-note slot="end">{{ scooterData?.total_distance }}Km</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Distancia restante</ion-label>
+            <ion-note slot="end">{{ scooterData?.distance_remaining }}Km</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Temperatura motor</ion-label>
+            <ion-note slot="end">{{ scooterData?.motor_temperature }}ºC</ion-note>
+          </ion-item>
+
+          <ion-list-header>Batería</ion-list-header>
+          <ion-item>
+            <ion-label>Carga</ion-label>
+            <ion-note slot="end">{{ scooterData?.battery_life }}%</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Serial</ion-label>
+            <ion-note slot="end">{{ scooterData?.battery_serial }}</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Fecha de fabricación</ion-label>
+            <ion-note slot="end">{{ scooterData?.battery_date }}</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Salud</ion-label>
+            <ion-note slot="end">{{ scooterData?.battery_health }}%</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Temperatura</ion-label>
+            <ion-note slot="end">{{ scooterData?.battery_temp1 }}ºC / {{ scooterData?.battery_temp2 }}ºC</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Capacidad</ion-label>
+            <ion-note slot="end">{{ scooterData?.battery_remaining_capacity }} / {{
+              scooterData?.battery_design_capacity }} mAh</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Intensidad</ion-label>
+            <ion-note slot="end">{{ scooterData?.battery_ampere }}A</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Tensión</ion-label>
+            <ion-note slot="end">{{ scooterData?.battery_voltage }}V</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Potencia</ion-label>
+            <ion-note slot="end">{{ scooterData?.battery_power }}W</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Potencia Máxima</ion-label>
+            <ion-note slot="end">{{ scooterData?.battery_max_power }}W</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Potencia Minima</ion-label>
+            <ion-note slot="end">{{ scooterData?.battery_min_power }}W</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Ciclos de carga</ion-label>
+            <ion-note slot="end">{{ scooterData?.battery_charges }}</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Ciclos de carga completas</ion-label>
+            <ion-note slot="end">{{ scooterData?.battery_full_charges }}</ion-note>
+          </ion-item>
+
+          <ion-list-header *ngIf="scooterData && scooterData.voltage_cells">Voltajes de celdas</ion-list-header>
+          <ion-item *ngFor="let cell of scooterData.voltage_cells">
+            <ion-label>{{ cell }}V</ion-label>
+          </ion-item>
+
+          <ion-list-header>Opciones</ion-list-header>
+          <ion-item>
+            <ion-label>Crucero</ion-label>
+            <ion-toggle *ngIf="scooterData" [(ngModel)]="scooterData.cruise_mode"></ion-toggle>
           </ion-item>
           <ion-item>
-            <ion-label>Pac-Man</ion-label>
+            <ion-label>Luz trasera</ion-label>
+            <ion-toggle *ngIf="scooterData" [(ngModel)]="scooterData.light_mode"></ion-toggle>
           </ion-item>
           <ion-item>
-            <ion-label>Super Mario World</ion-label>
+            <ion-label>Bloqueo</ion-label>
+            <ion-toggle *ngIf="scooterData" [(ngModel)]="scooterData.lock_mode"></ion-toggle>
           </ion-item>
           <ion-item>
-            <ion-label>Super Mario World</ion-label>
+            <ion-label>KERS</ion-label>
+            <ion-select *ngIf="scooterData" [(ngModel)]="scooterData.recovery_mode" interface="action-sheet">
+              <ion-select-option value="0">Bajo</ion-select-option>
+              <ion-select-option value="1">Medio</ion-select-option>
+              <ion-select-option value="2">Alto</ion-select-option>
+            </ion-select>
           </ion-item>
-          <ion-item>
-            <ion-label>Super Mario World</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Super Mario World</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Super Mario World</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Super Mario World</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Super Mario World</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Super Mario World</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Super Mario World</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Super Mario World</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Super Mario World</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Super Mario World</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Super Mario World</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Super Mario World</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Super Mario World</ion-label>
-          </ion-item>
+
         </ion-list>
       </div>
     </ion-slide>
