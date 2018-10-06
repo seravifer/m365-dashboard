@@ -1,4 +1,4 @@
-import { Scooter } from './../../models/scooter';
+import { Scooter } from '../../models/scooter';
 import { Component, ViewChild } from '@angular/core';
 import { Slides } from '@ionic/angular';
 
@@ -10,7 +10,8 @@ import { Slides } from '@ionic/angular';
 export class MockPage {
 
   slideOptions = {
-    initialSlide: 1
+    initialSlide: 1,
+    autoplay: false
   };
 
   scooterData: Scooter = {
@@ -21,7 +22,7 @@ export class MockPage {
     error_code: 0,
     warning_oce: 0,
 
-    speed: 24.8,
+    speed: 2.8,
     avg_speed: 20.3,
     max_speed: 27,
 
@@ -56,6 +57,8 @@ export class MockPage {
     voltage_cells: [3.5, 3.6, 3.45, 3.23]
   };
 
+  Math: Math = Math;
+
   @ViewChild('slides') slides: Slides;
 
   constructor() { }
@@ -65,8 +68,9 @@ export class MockPage {
     return number[1] ? +number[1] : 0;
   }
 
-  truncate(n: number) {
-    return Math.trunc(n);
+  formatSpeed(n: number) {
+    const value = Math.trunc(n).toString();
+    return value.length == 2 ? value : `0${value}`;
   }
 
 }

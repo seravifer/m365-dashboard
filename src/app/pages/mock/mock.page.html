@@ -1,8 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>M365</ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="start">
       <ion-icon slot="icon-only" name="power"></ion-icon>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-icon slot="icon-only" name="options"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -13,17 +16,61 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            150W<span>Potencia</span>
+            {{ scooterData?.battery_min_power }}<span>W</span>
+            <div>Potencia mínima</div>
           </div>
           <div class="col">
-            150W<span>Potencia máxima</span>
+            {{ scooterData?.battery_max_power }}<span>W</span>
+            <div>Potencia máxima</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ scooterData?.avg_speed }}<span>Km/h</span>
+            <div>Velocidad media</div>
+          </div>
+          <div class="col">
+            {{ scooterData?.max_speed }}<span>Km/h</span>
+            <div>Velocidad máxima</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ scooterData?.distance_travelled }}<span>Km</span>
+            <div>Distancia recorrida</div>
+          </div>
+          <div class="col">
+            {{ scooterData?.distance_remaining }}<span>Km</span>
+            <div>Distancia restante</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ scooterData?.total_distance }}<span>Km</span>
+            <div>Distancia total</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ scooterData?.motor_temperature }}<span>ºC</span>
+            <div>Temp. motor</div>
+          </div>
+          <div class="col">
+            {{ Math.max(scooterData?.battery_temp1, scooterData?.battery_temp1) }}<span>ºC</span>
+            <div>Temp. batería</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ scooterData?.battery_remaining_capacity }}<span>mAh</span>
+            <div>Capacidad restante</div>
           </div>
         </div>
       </div>
     </ion-slide>
     <ion-slide>
       <div class="container">
-        <div class="speed">{{ truncate(scooterData?.speed) }}<span>{{ getDecimal(scooterData?.speed) }}</span></div>
+        <div class="speed">{{ formatSpeed(scooterData?.speed) }}<span>{{ getDecimal(scooterData?.speed) }}</span></div>
 
         <div class="options">
           <div>{{ scooterData?.battery_life }}%</div>
@@ -36,13 +83,15 @@
         </div>
         <div class="actions">
           <ion-fab-button>
-            <ion-icon name="flash"></ion-icon>
+            <ion-icon name="compass"></ion-icon>
           </ion-fab-button>
           <ion-fab-button>
-            <ion-icon name="unlock"></ion-icon>
+            <ion-icon name="lock" *ngIf="scooterData.lock_mode"></ion-icon>
+            <ion-icon name="unlock" *ngIf="!scooterData.lock_mode"></ion-icon>
           </ion-fab-button>
           <ion-fab-button>
-            <ion-icon name="flashlight"></ion-icon>
+            <ion-icon name="flash" *ngIf="scooterData.light_mode"></ion-icon>
+            <ion-icon name="flash-off" *ngIf="!scooterData.light_mode"></ion-icon>
           </ion-fab-button>
         </div>
       </div>
@@ -64,49 +113,7 @@
             <ion-note slot="end">{{ scooterData?.bms_code }}</ion-note>
           </ion-item>
 
-          <ion-list-header>Velocidades</ion-list-header>
-          <ion-item>
-            <ion-label>Velocidad</ion-label>
-            <ion-note slot="end">{{ scooterData?.speed }}Km/h</ion-note>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Velocidad media</ion-label>
-            <ion-note slot="end">{{ scooterData?.avg_speed }}Km/h</ion-note>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Velocidad máxima</ion-label>
-            <ion-note slot="end">{{ scooterData?.max_speed }}Km/h</ion-note>
-          </ion-item>
-
-          <ion-list-header>Distancia</ion-list-header>
-          <ion-item>
-            <ion-label>Distancia del viaje</ion-label>
-            <ion-note slot="end">{{ scooterData?.distance_travelled }}Km</ion-note>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Distancia total</ion-label>
-            <ion-note slot="end">{{ scooterData?.total_distance }}Km</ion-note>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Distancia restante</ion-label>
-            <ion-note slot="end">{{ scooterData?.distance_remaining }}Km</ion-note>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Temperatura motor</ion-label>
-            <ion-note slot="end">{{ scooterData?.motor_temperature }}ºC</ion-note>
-          </ion-item>
-
           <ion-list-header>Batería</ion-list-header>
-          <ion-item>
-            <ion-label>Carga</ion-label>
-            <ion-note slot="end">{{ scooterData?.battery_life }}%</ion-note>
-          </ion-item>
-
           <ion-item>
             <ion-label>Serial</ion-label>
             <ion-note slot="end">{{ scooterData?.battery_serial }}</ion-note>
@@ -115,6 +122,11 @@
           <ion-item>
             <ion-label>Fecha de fabricación</ion-label>
             <ion-note slot="end">{{ scooterData?.battery_date }}</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Carga</ion-label>
+            <ion-note slot="end">{{ scooterData?.battery_life }}%</ion-note>
           </ion-item>
 
           <ion-item>
