@@ -13,7 +13,7 @@ export interface Scooter {
     distance_travelled?: number;
     distance_remaining?: number;
     total_distance?: number;
-    uptime?: string;
+    uptime?: number;
     ridding_time?: number;
 
     motor_temperature?: number;

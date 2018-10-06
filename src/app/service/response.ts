@@ -22,7 +22,7 @@ export class ResponseService {
   hendleResponse(data: string) {
     if (data.length === 0) return;
 
-    const fromType = data.slice(6, 8);
+    let fromType = data.slice(6, 8);
     let dataType = data.slice(10, 12);
     let lengthContent = (d(data.slice(4, 6)) - 2) * 2;
     let dataContent = data.slice(12, 12 + lengthContent);
@@ -33,13 +33,14 @@ export class ResponseService {
       return;
     } else if (this._lastResponse) {
       data = this._lastResponse + data;
+      fromType = data.slice(6, 8);
       dataType = data.slice(10, 12);
       lengthContent = (d(data.slice(4, 6)) - 2) * 2;
       dataContent = data.slice(12, 12 + lengthContent);
       dataContent = this.helper.parseHex(dataContent);
       this._lastResponse = null;
     }
-    console.log(fromType, dataType, lengthContent, dataContent);
+    // console.log(data, fromType, dataType, lengthContent, dataContent);
 
     this.selectParser(fromType, dataType, dataContent);
   }
@@ -51,7 +52,6 @@ export class ResponseService {
         case '1a': this.parseFirmware(dataContent); break;
 
         case 'b0': this.parseMasterInfo(dataContent); break;
-        case '3a': this.parseTravell(dataContent); break;
         case '25': this.parseRemainigDistance(dataContent); break;
 
         case '7b': this.parseRecovery(dataContent); break;
@@ -84,14 +84,15 @@ export class ResponseService {
   parseMasterInfo(data: string) {
     const value = data.match(/.{1,4}/g);
     this._scooterData.motor_temperature = d(value[4]) / 10;
-    this._scooterData.distance_travelled = d(value[6]);
+    this._scooterData.uptime = d(value[5]);
+    this._scooterData.distance_travelled = d(value[6]) / 100;
     this._scooterData.total_distance = d(value[7] + value[8]) / 1000;
     this._scooterData.avg_speed = d(value[9]) / 1000;
     this.parseSpeed(value[10]);
     this._scooterData.battery_life = d(value[11]);
-    this.parseLock(value[13]);
     this._scooterData.warning_oce = d(value[14]);
     this._scooterData.error_code = d(value[15]);
+    console.log('Master:', value[6], value[5]);
   }
 
   private parseSpeed(data: string) {
@@ -99,15 +100,11 @@ export class ResponseService {
     const speed = Math.round(value * 10) / 10;
     this._scooterData.speed = speed;
     if (speed > this._scooterData.speed) this._scooterData.max_speed = speed;
-  }
-
-  parseTravell(data: string) {
-    const value = data.match(/.{1,4}/g);
-    this._scooterData.distance_travelled = d(value[0]);
-    this._scooterData.ridding_time = d(value[1]);
+    else this._scooterData.max_speed = 0;
   }
 
   parseRemainigDistance(data: string) {
+    console.log(data);
     this._scooterData.distance_remaining = d(data) / 100;
   }
 
@@ -129,6 +126,10 @@ export class ResponseService {
     this._scooterData.battery_power = value;
     if (value > this._scooterData.battery_max_power) this._scooterData.battery_max_power = value;
     if (value < this._scooterData.battery_min_power) this._scooterData.battery_min_power = value;
+    else {
+      this._scooterData.battery_max_power = 0;
+      this._scooterData.battery_min_power = 0;
+    }
   }
 
   parseBatteryDate(data: string) {

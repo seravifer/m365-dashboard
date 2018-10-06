@@ -48,15 +48,6 @@ export class CommandsService {
       .build();
   }
 
-  getTravel() {
-    return new Message()
-      .setDirection(Command.MASTER_TO_SCOOTER)
-      .setRW(Command.READ)
-      .setPosition(0x3a)
-      .setPayload(0x04)
-      .build();
-  }
-
   // Battery - - - - - - - - - - - - - - - - -
 
   getMasterBattery() {

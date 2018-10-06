@@ -1,5 +1,5 @@
 import { BLE } from '@ionic-native/ble/ngx';
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +14,8 @@ export class HomePage implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private bluetooth: BLE,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit() {
@@ -36,8 +37,13 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   onSelectDevice(id: string) {
-    this.bluetooth.stopScan();
-    this.router.navigate(['dashboard', id]);
+    this.bluetooth.connect(id).subscribe(res =>  {
+        console.log('Conected device!');
+        this.ngZone.run(() => this.router.navigate(['dashboard', id]));
+        this.bluetooth.stopScan();
+    }, err => {
+      console.log('Device connection error!');
+    });
   }
 
   ngOnDestroy() {

@@ -9,11 +9,6 @@ import { Slides } from '@ionic/angular';
 })
 export class MockPage {
 
-  slideOptions = {
-    initialSlide: 1,
-    autoplay: false
-  };
-
   scooterData: Scooter = {
     serial_number: 'YTGK7HVGH68BYTV',
     firmware_version: '1.4.2',
@@ -29,7 +24,7 @@ export class MockPage {
     distance_travelled: 2.34,
     distance_remaining: 20.5,
     total_distance: 145.98,
-    uptime: '23:34',
+    uptime: 3400,
     ridding_time: 3400, // seconds
 
     motor_temperature: 28,
@@ -57,6 +52,12 @@ export class MockPage {
     voltage_cells: [3.5, 3.6, 3.45, 3.23]
   };
 
+  slideOptions = {
+    initialSlide: 1,
+    autoplay: false
+  };
+
+
   Math: Math = Math;
 
   @ViewChild('slides') slides: Slides;
@@ -70,7 +71,7 @@ export class MockPage {
 
   formatSpeed(n: number) {
     const value = Math.trunc(n).toString();
-    return value.length == 2 ? value : `0${value}`;
+    return value.length === 2 ? value : `0${value}`;
   }
 
 }
