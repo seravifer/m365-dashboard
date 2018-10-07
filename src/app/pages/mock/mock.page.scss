@@ -50,15 +50,27 @@ ion-slide {
 .options {
 	display: flex;
 	justify-content: space-between;
-	font-size: 54px;
+	font-size: 14vw;
 	font-weight: 200;
 	padding: 0 12vw;
 	margin-top: 20px;
 }
 
 .line {
-  margin: 40px 30vw;
+  margin: 7vh 30vw;
   border: 0.5px solid #ccc;
+}
+
+.travel {
+	display: flex;
+	justify-content: space-between;
+	font-size: 12vw;
+	font-weight: 300;
+	padding: 0 12vw;
+  margin-top: 20px;
+  span {
+    font-size: 24px;
+  }
 }
 
 .actions {
@@ -73,14 +85,3 @@ ion-slide {
   }
 }
 
-.travel {
-	display: flex;
-	justify-content: space-between;
-	font-size: 46px;
-	font-weight: 300;
-	padding: 0 12vw;
-  margin-top: 20px;
-  span {
-    font-size: 24px;
-  }
-}
